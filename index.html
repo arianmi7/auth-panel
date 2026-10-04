@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0616" />
+    <title>ورود و ثبت‌نام</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script type="module" src="/src/main.js"></script>
+</head>
+
+<body class="min-h-dvh bg-ink text-white antialiased">
+    <div class="circuit pointer-events-none fixed inset-0" aria-hidden="true"></div>
+
+    <div class="relative z-10 flex min-h-dvh flex-col">
+        <!-- ================= Header ================= -->
+        <header class="border-b border-edge/70 bg-ink/70 backdrop-blur">
+            <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+                <!-- Logo slot: replace the SVG inside .logo-slot with your <img src="logo.svg"> -->
+                <a href="/" id="logoLink" class="flex items-center gap-3" data-i18n-aria="aria_home">
+                    <span class="logo-slot">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="6" y="6" width="12" height="12" rx="2" />
+                <rect x="10" y="10" width="4" height="4" />
+                <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" />
+              </svg>
+            </span>
+                    <span class="text-lg font-semibold" data-i18n="brand"></span>
+                </a>
+
+                <nav class="flex items-center gap-3">
+                    <a href="/" class="hidden rounded-lg px-3 py-2 text-sm text-lilac/80 transition hover:text-white sm:block" data-i18n="nav_home"></a>
+
+                    <!-- Language switch -->
+                    <div class="flex items-center rounded-full border border-edge bg-well p-0.5" role="group" aria-label="Language">
+                        <button type="button" class="lang-btn" data-lang="fa" aria-pressed="true">فارسی</button>
+                        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">English</button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- ================= Main ================= -->
+        <main class="flex flex-1 items-center justify-center px-4 py-10">
+            <div class="panel w-full max-w-md p-6 sm:p-8">
+                <!-- Tabs -->
+                <div class="mb-6 flex rounded-xl border border-edge bg-well p-1" role="tablist">
+                    <button type="button" role="tab" class="tab" data-mode="login" aria-selected="true" data-i18n="tab_login"></button>
+                    <button type="button" role="tab" class="tab" data-mode="signup" aria-selected="false" data-i18n="tab_signup"></button>
+                </div>
+
+                <!-- Step 1: phone -->
+                <section id="stepPhone">
+                    <h1 id="title" class="text-2xl font-bold" data-i18n="title_login"></h1>
+                    <p id="subtitle" class="mt-2 text-sm leading-7 text-lilac/70" data-i18n="sub_login"></p>
+
+                    <form id="phoneForm" class="mt-6 space-y-4" novalidate>
+                        <div id="nameField" hidden>
+                            <label for="nameInput" class="mb-2 block text-sm text-lilac" data-i18n="label_name"></label>
+                            <input id="nameInput" type="text" autocomplete="name" class="field" data-i18n-placeholder="ph_name" />
+                            <p id="nameError" class="mt-2 text-sm text-bad" role="alert"></p>
+                        </div>
+
+                        <div>
+                            <label for="phoneInput" class="mb-2 block text-sm text-lilac" data-i18n="label_phone"></label>
+                            <input id="phoneInput" type="tel" inputmode="numeric" autocomplete="tel" dir="ltr" maxlength="11" class="field text-start font-mono tracking-wider" data-i18n-placeholder="ph_phone" />
+                            <p id="phoneError" class="mt-2 text-sm text-bad" role="alert"></p>
+                        </div>
+
+                        <button id="sendBtn" type="submit" class="btn-primary" data-i18n="btn_send_login"></button>
+                    </form>
+                </section>
+
+                <!-- Step 2: OTP -->
+                <section id="stepOtp" hidden>
+                    <h2 class="text-2xl font-bold" data-i18n="otp_title"></h2>
+                    <p id="otpSub" class="mt-2 text-sm leading-7 text-lilac/70"></p>
+
+                    <!-- The 4 digits are typed here; they auto-verify, there is no confirm button -->
+                    <div id="otpStage" class="stage mx-auto my-6 h-40 w-full max-w-sm" dir="ltr">
+                        <div class="vortex" aria-hidden="true"></div>
+                        <div class="vortex vortex-2" aria-hidden="true"></div>
+
+                        <div class="absolute inset-0 flex items-center justify-center gap-3">
+                            <input class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder=" " aria-label="Digit 1" />
+                            <input class="otp-input" type="text" inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Digit 2" />
+                            <input class="otp-input" type="text" inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Digit 3" />
+                            <input class="otp-input" type="text" inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Digit 4" />
+                        </div>
+
+                        <div id="chipLayer" class="pointer-events-none absolute inset-0" aria-hidden="true"></div>
+                    </div>
+
+                    <p id="otpStatus" class="min-h-6 text-center text-sm font-medium" aria-live="polite"></p>
+
+                    <div class="mt-4 flex items-center justify-between text-sm">
+                        <button id="editPhone" type="button" class="text-lilac underline-offset-4 hover:underline" data-i18n="otp_edit"></button>
+                        <div>
+                            <span id="resendText" class="text-lilac/60"></span>
+                            <button id="resendBtn" type="button" class="text-lilac underline-offset-4 hover:underline" hidden data-i18n="otp_resend"></button>
+                        </div>
+                    </div>
+
+                    <!-- Demo only: delete this line in production -->
+                    <p class="mt-5 text-center text-xs text-lilac/40" data-i18n="demo_hint"></p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="px-4 pb-6 text-center text-xs text-lilac/40">
+            © <span id="year"></span> <span data-i18n="brand"></span> — <span data-i18n="footer"></span>
+        </footer>
+    </div>
+</body>
+
+</html>

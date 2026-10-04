@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+@theme static {
+  --color-ink: #0b0616;
+  --color-panel: #140b29;
+  --color-well: #0e0720;
+  --color-edge: #2f1f5c;
+  --color-violet: #8b5cf6;
+  --color-deep: #6d28d9;
+  --color-lilac: #c4b5fd;
+  --color-ok: #22e08a;
+  --color-bad: #ff4d6d;
+  --font-fa: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-en: "Space Grotesk", "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+html { font-family: var(--font-fa); }
+html[lang="en"] { font-family: var(--font-en); }
+
+body {
+  background:
+    radial-gradient(60rem 30rem at 50% -10%, rgba(109, 40, 217, 0.35), transparent 70%),
+    radial-gradient(40rem 24rem at 100% 100%, rgba(139, 92, 246, 0.18), transparent 70%),
+    var(--color-ink);
+}
+
+/* ---------- Circuit-board background ---------- */
+.circuit {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160' fill='none' stroke='%238b5cf6' stroke-opacity='.2' stroke-width='1.2'%3E%3Cpath d='M0 40h50l15 15h40M160 100h-60l-15 15H40M80 0v30l15 15M80 160v-30l-15-15'/%3E%3Ccircle cx='50' cy='40' r='3'/%3E%3Ccircle cx='105' cy='55' r='3'/%3E%3Ccircle cx='100' cy='100' r='3'/%3E%3Ccircle cx='40' cy='115' r='3'/%3E%3C/svg%3E");
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+}
+
+/* ---------- Panel ---------- */
+.panel {
+  position: relative;
+  background: rgba(20, 11, 41, 0.82);
+  border: 1px solid var(--color-edge);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.06), 0 30px 80px -30px rgba(139, 92, 246, 0.55);
+}
+.panel::before,
+.panel::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-violet);
+  pointer-events: none;
+}
+.panel::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-top-left-radius: 1.25rem; }
+.panel::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-bottom-right-radius: 1.25rem; }
+
+/* ---------- Logo placeholder ---------- */
+.logo-slot {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  border: 1.5px dashed var(--color-violet);
+  color: var(--color-lilac);
+  background: rgba(139, 92, 246, 0.1);
+  transition: box-shadow 0.2s, background 0.2s;
+}
+a:hover > .logo-slot,
+a:focus-visible > .logo-slot {
+  background: rgba(139, 92, 246, 0.22);
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.6);
+}
+
+/* ---------- Form controls ---------- */
+.field {
+  width: 100%;
+  background: var(--color-well);
+  border: 1px solid var(--color-edge);
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field::placeholder { color: rgba(196, 181, 253, 0.35); }
+.field:focus {
+  border-color: var(--color-violet);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+}
+.field.invalid { border-color: var(--color-bad); box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.18); }
+
+.btn-primary {
+  width: 100%;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-deep), var(--color-violet));
+  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.9);
+  transition: filter 0.2s, transform 0.1s;
+}
+.btn-primary:hover { filter: brightness(1.12); }
+.btn-primary:active { transform: translateY(1px); }
+
+:where(a, button, input):focus-visible {
+  outline: 2px solid var(--color-lilac);
+  outline-offset: 2px;
+}
+.field:focus-visible { outline: none; }
+
+/* ---------- Tabs ---------- */
+.tab {
+  flex: 1;
+  padding: 0.55rem 1rem;
+  border-radius: 0.6rem;
+  color: rgba(196, 181, 253, 0.7);
+  transition: background 0.2s, color 0.2s;
+}
+.tab[aria-selected="true"] {
+  background: rgba(139, 92, 246, 0.25);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.6);
+}
+
+/* ---------- Language switch ---------- */
+.lang-btn {
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  color: rgba(196, 181, 253, 0.75);
+  transition: background 0.2s, color 0.2s;
+}
+.lang-btn[aria-pressed="true"] {
+  background: var(--color-violet);
+  color: #fff;
+}
+
+/* ---------- OTP ---------- */
+.stage { position: relative; }
+
+.otp-input {
+  width: 3.5rem;
+  height: 4rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  caret-color: var(--color-lilac);
+  background: var(--color-well);
+  border: 1.5px solid var(--color-edge);
+  border-radius: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.otp-input:focus {
+  border-color: var(--color-violet);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3), 0 0 22px rgba(139, 92, 246, 0.35);
+}
+.otp-input:not(:placeholder-shown) { border-color: var(--color-lilac); }
+@media (max-width: 380px) {
+  .otp-input { width: 3rem; height: 3.6rem; }
+}
+.stage.hide-inputs .otp-input { opacity: 0; transition: none; }
+
+/* Digit chips that fly around during verification */
+.chip {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1b0f3a;
+  border: 1.5px solid var(--color-violet);
+  border-radius: 0.85rem;
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.75);
+  transition: background 0.25s, border-color 0.25s, color 0.25s, box-shadow 0.25s;
+  will-change: transform;
+}
+.chip.ok {
+  color: var(--color-ok);
+  background: rgba(34, 224, 138, 0.12);
+  border-color: var(--color-ok);
+  box-shadow: 0 0 22px rgba(34, 224, 138, 0.7);
+}
+.chip.bad {
+  color: var(--color-bad);
+  background: rgba(255, 77, 109, 0.12);
+  border-color: var(--color-bad);
+  box-shadow: 0 0 22px rgba(255, 77, 109, 0.7);
+}
+
+/* Two counter-rotating rings behind the whirl */
+.vortex {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  border-top-color: var(--color-lilac);
+  border-left-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.45);
+  opacity: 0;
+  transition: opacity 0.35s;
+  animation: spin 0.55s linear infinite;
+  pointer-events: none;
+}
+.vortex-2 {
+  width: 108px;
+  height: 108px;
+  margin: -54px 0 0 -54px;
+  border-top-color: transparent;
+  border-bottom-color: var(--color-violet);
+  border-right-color: rgba(196, 181, 253, 0.4);
+  animation-duration: 0.8s;
+  animation-direction: reverse;
+}
+.stage.is-spinning .vortex { opacity: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Expanding ring when the result arrives */
+.stage::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 9999px;
+  border: 2px solid var(--burst, transparent);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  pointer-events: none;
+}
+.stage.burst-ok { --burst: var(--color-ok); }
+.stage.burst-bad { --burst: var(--color-bad); }
+.stage.burst-ok::after,
+.stage.burst-bad::after { animation: burst 0.9s ease-out; }
+@keyframes burst {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.5); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.9); }
+}
+
+.shake { animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-8px); }
+  40%, 60% { transform: translateX(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vortex { animation: none; }
+  .stage.burst-ok::after,
+  .stage.burst-bad::after { animation: none; }
+  .shake { animation: none; }
+}
